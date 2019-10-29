@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "./build.sh",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "dev": "./dev.sh"
   },
   "dependencies": {
     "typescript": "3.6.4"
