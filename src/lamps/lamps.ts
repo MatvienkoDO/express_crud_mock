@@ -28,7 +28,7 @@ router.post(
       };
     }
 
-    if (typeof(age) !== 'number') {
+    if (typeof(age) !== 'number' || isNaN(age)) {
       response
         .status(400)
         .send('age is required and should be a number');
@@ -43,11 +43,10 @@ router.post(
   }
 );
 
-const lampIdentificatorParamName = 'id';
 router.get(
-  `/:${lampIdentificatorParamName}`,
+  '/:id',
   (request, response) => {
-    const idParamValue = request.params[lampIdentificatorParamName];
+    const idParamValue = request.params['id'];
 
     const id = Number(idParamValue);
 
@@ -66,7 +65,7 @@ router.get(
 
     if (!found) {
       response
-        .status(400)
+        .status(404)
         .send('lamp with specified id was not found');
 
       throw {
