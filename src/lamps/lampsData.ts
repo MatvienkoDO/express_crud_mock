@@ -35,6 +35,10 @@ export function findById(id: number): Lamp | null {
   return found ? copy(found) : null;
 }
 
+export function getAll() {
+  return lamps.map(value => Object.assign({}, value));
+}
+
 export function update(id: number, lampData: Partial<Lamp>): Lamp | null {
   const found = _findById(id);
 
