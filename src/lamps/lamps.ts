@@ -87,4 +87,72 @@ router.get(
   }
 );
 
+router.patch(
+  `/update`,
+  bodyParser.json(),
+  ({ body }, response) => {
+    const { id } = body;
+
+    if (typeof(id) !== 'number' || isNaN(id)) {
+      response
+        .status(400)
+        .send('incorrect id');
+
+      throw {
+        id,
+        message: 'id is not number or is NaN'
+      };
+    }
+
+    const lamp = update(id, body);
+
+    if (!lamp) {
+      response
+        .status(404)
+        .send('such lamp was not found');
+
+      throw {
+        id,
+        message: 'such lamp was not found'
+      };
+    }
+
+    response.send(lamp);
+  }
+);
+
+router.delete(
+  `/delete/:id`,
+  (request, response) => {
+    const idParam = request.params['id'];
+    const id = Number(idParam);
+
+    if (isNaN(id)) {
+      response
+        .status(400)
+        .send('incorrect id');
+
+      throw {
+        idParam,
+        message: 'incorrect id'
+      };
+    }
+
+    const deleted = deleteLamp(id);
+
+    if (!deleted) {
+      response
+        .status(404)
+        .send('such lamp was not found');
+
+      throw {
+        id,
+        message: 'such lamp was not found'
+      };
+    }
+
+    response.send(deleted);
+  }
+);
+
 export default router;
